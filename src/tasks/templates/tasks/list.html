@@ -19,7 +19,7 @@
             {% for task in task_objects %}
                 <tr>
                     <td>
-                        <a href="{% url ' tasks_detail' task.pk %}" title="View {{ task.name }}">
+                        <a href="{% url 'tasks_detail' task.pk %}" title="View {{ task.name }}">
                             {{ task.name }}
                         </a>
                     </td>

@@ -14,19 +14,31 @@
         </li>
          <li>
             <strong>Assignee:</strong>
-             {{ task.assignee.first_name }} {{ task.assignee.last_name }}
+             {% if task.assignee %}
+                {{ task.assignee.first_name }} {{ task.assignee.last_name }}
+             {% else %}
+                Unassigned
+             {% endif %}
         </li>
          <li>
             <strong>Estimated:</strong>
-              {{ task.time_estimated }}
+             {% if task.estimated %}
+                {{ task.time_estimated }}
+             {% else %}
+                Unassigned
+             {% endif %}
         </li>
          <li>
             <strong>Status:</strong>
-             {{ task.status }}
+             {{ task.get_status_display }}
         </li>
          <li>
             <strong>Deadline:</strong>
-             {{ task.deadline }}
+             {% if task.deadline %}
+                {{ task.deadline }}
+             {% else %}
+                No deadline set
+             {% endif %}
         </li>
     </ul>
 
