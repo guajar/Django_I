@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} Todoro {% endblock %}</title>
+</head>
+<body>
+    <h1>Todoro</h1>
+    <hr>
+    <a href="{% url 'tasks_list' %}" title="Home">Home</a>
+
+    <a href="" title="Created by me">Created by me</a>
+
+    <a href="" title="Assigned to me">Assigned to me</a>
+    <hr>
+    {% block content %}{% endblock %}
+    <hr>
+    Todoro &copy; All rights reserved.
+</body>
+</html>

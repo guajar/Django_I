@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Todoro</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %} {{ task.name }} {% endblock %}
+
+{% block content %}
     <h1>{{ task.name }}</h1>
     <p>{{ task.description }}</p>
     <ul>
@@ -41,6 +39,4 @@
              {% endif %}
         </li>
     </ul>
-
-</body>
-</html>
+{% endblock %}
