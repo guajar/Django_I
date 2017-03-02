@@ -5,10 +5,42 @@
     <title>Title</title>
 </head>
 <body>
-    <ul>
-        {% for task in task_objects %}
-            <li>{{ task.name }}</li>
-        {% endfor %}
-    </ul>
+    <h1>Todoro</h1>
+    <table width="100%" border="1" cellpadding="10" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Owner</th>
+                <th>Assignee</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in task_objects %}
+                <tr>
+                    <td>
+                        <a href="{% url ' tasks_detail' task.pk %}" title="View {{ task.name }}">
+                            {{ task.name }}
+                        </a>
+                    </td>
+                    <td>
+                        {% if task.owner %}
+                            {{ task.owner.first_name }} {{ task.owner.last_name }}
+                        {% else %}
+                            Unassigned
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if task.assignee %}
+                            {{ task.assignee.first_name }} {{ task.assignee.last_name  }}
+                        {% else %}
+                            Unassigned
+                        {% endif %}
+                    </td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>

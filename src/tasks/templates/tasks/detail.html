@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todoro</title>
+</head>
+<body>
+    <h1>{{ task.name }}</h1>
+    <p>{{ task.description }}</p>
+    <ul>
+        <li>
+            <strong>Owner:</strong>
+            {{ task.owner.first_name }} {{ task.owner.last_name }}
+        </li>
+         <li>
+            <strong>Assignee:</strong>
+             {{ task.assignee.first_name }} {{ task.assignee.last_name }}
+        </li>
+         <li>
+            <strong>Estimated:</strong>
+              {{ task.time_estimated }}
+        </li>
+         <li>
+            <strong>Status:</strong>
+             {{ task.status }}
+        </li>
+         <li>
+            <strong>Deadline:</strong>
+             {{ task.deadline }}
+        </li>
+    </ul>
+
+</body>
+</html>
