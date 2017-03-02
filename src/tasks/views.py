@@ -32,7 +32,7 @@ def tasks_detail(request, task_pk):
     # Recuperar la tarea
     # Opción 1
     try:
-        task = Task.objects.get(pk=task_pk)
+        task = Task.objects.select_related().get(pk=task_pk)
     except Task.DoesNotExist:
         return render(request, '404.html', status=404)
     except Task.MultipleObjectsReturned:
