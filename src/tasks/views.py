@@ -14,6 +14,14 @@ def tasks_list(request):
     # Recuperar todas las tareas de la BBDD
     tasks = Task.objects.select_related("owner", "assignee").all()
 
+    # Comprobamos si se debe flitrar por tareas creadas por el user autenticado
+    if request.GET.get('filter') == 'owned':
+        tasks = tasks.filter(owner=request.user)
+
+    # Comprobamos si se debe flitrar por tareas creadas por el user autenticado
+    if request.GET.get('filter') == 'assigned':
+        tasks = tasks.filter(assignee=request.user)
+
     # Devolver la respuesta
     context = {
         'task_objects': tasks

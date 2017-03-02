@@ -9,9 +9,9 @@
     <hr>
     <a href="{% url 'tasks_list' %}" title="Home">Home</a>
 
-    <a href="" title="Created by me">Created by me</a>
+    <a href="{% url 'tasks_list' %}?filter=owned" title="Created by me">Created by me</a>
 
-    <a href="" title="Assigned to me">Assigned to me</a>
+    <a href="{% url 'tasks_list' %}?filter=assigned" title="Assigned to me">Assigned to me</a>
     <hr>
     {% block content %}{% endblock %}
     <hr>
