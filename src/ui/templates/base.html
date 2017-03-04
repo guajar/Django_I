@@ -8,10 +8,14 @@
     <h1>Todoro</h1>
     <hr>
     <a href="{% url 'tasks_list' %}" title="Home">Home</a>
-
-    <a href="{% url 'tasks_list' %}?filter=owned" title="Created by me">Created by me</a>
-
-    <a href="{% url 'tasks_list' %}?filter=assigned" title="Assigned to me">Assigned to me</a>
+    |
+    {% if user.is_authenticated %}
+        <a href="{% url 'tasks_list' %}?filter=owned" title="Created by me">Created by me</a>
+        |
+        <a href="{% url 'tasks_list' %}?filter=assigned" title="Assigned to me">Assigned to me</a>
+    {% else %}
+        <a href="{%url 'login' %}" title="Login into Todoro">Login</a>
+    {% endif %}
     <hr>
     {% block content %}{% endblock %}
     <hr>
