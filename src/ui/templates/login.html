@@ -4,4 +4,21 @@
 
     <h2>Login</h2>
 
+    <div style="color:red">{{ error }}</div>
+
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            <strong>Username:</strong>
+            <input type="text" id="username" name="usr">
+        </div>
+        <div>
+            <strong>Password:</strong>
+            <input type="password" id="password" name="pwd">
+        </div>
+        <div>
+            <button>Login</button>
+        </div>
+    </form>
+
 {% endblock %}
