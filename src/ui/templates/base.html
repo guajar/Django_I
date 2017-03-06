@@ -11,6 +11,8 @@
     <a href="{% url 'tasks_list' %}" title="Home">Home</a>
     |
     {% if user.is_authenticated %}
+        <a href="{% url 'tasks_new' %}?filter=owned" title="Created new task">Created by me</a>
+        |
         <a href="{% url 'tasks_list' %}?filter=owned" title="Created by me">Created by me</a>
         |
         <a href="{% url 'tasks_list' %}?filter=assigned" title="Assigned to me">Assigned to me</a>

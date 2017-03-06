@@ -1,7 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.urls import reverse
+from django.views import View
 
+from tasks.forms import TaskForm
 from tasks.models import Task
 
 
@@ -56,3 +59,41 @@ def tasks_detail(request, task_pk):
 
     # Renderizar la plantilla
     return render(request, 'tasks/detail.html', context)
+
+
+class NewTaskView(View):
+    def get(self, request):
+        # Crear el formulario
+        form = TaskForm()
+        # Renderiza la plantilla con el formulario
+        context = {
+            "form": form
+        }
+        return render(request, 'tasks/new.html', context)
+
+    def post(self, request):
+        # Crear el formulario con los datos del POST
+        task_with_user = Task(owner=request.user)
+        form = TaskForm(request.POST, instance=task_with_user)
+
+        # Validar el formulario
+        if form.is_valid():
+            # Crear la tarea
+            task = form.save()
+
+            # Mostrar mensaje de éxito
+            message = 'Tarea creada con éxito! <a href="{0}">Ver tarea</a>'.format(    # No hacer html aquí, solo com ejemplo de autoescape
+                reverse('task_detail', args=[task.pk])   # Genera la URL de detalle de esta tarea
+            )
+            # Limpiamos el formulario creando uno vacío para pasar a la plantilla
+            form = TaskForm()
+        else:
+            # Mostrar mensaje de error
+            message = "Se ha producido un error"
+
+        # Renderizar la plantilla
+        context = {
+            "form": form,
+            "message": message
+        }
+        return render(request, 'tasks/new.html', context)
