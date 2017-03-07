@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+
+from tasks.api import TasksAPI
 from tasks.views import tasks_list, tasks_detail, NewTaskView
 from users.api import UsersAPI, UserDetailAPI
 from users.views import LoginView, logout
@@ -27,7 +29,10 @@ urlpatterns = [
     url(r'^login$', LoginView.as_view(), name="login"),
     url(r'^logout$', logout, name='logout'),
 
-    # API
+    # API Users
     url(r'^api/1.0/users/$', UsersAPI.as_view(), name="users_api"),
     url(r'^api/1.0/users/(?P<pk>[0-9]+)$', UserDetailAPI.as_view(), name="user_detail_api"),
+
+    # API Tasks
+    url(r'^api/1.0/tasks/$', TasksAPI.as_view(), name="task_api")
 ]
