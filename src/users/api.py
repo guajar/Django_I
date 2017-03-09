@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.auth.models import User
-from rest_framework.generics import get_object_or_404
+from rest_framework.generics import get_object_or_404, GenericAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -9,7 +9,7 @@ from rest_framework import status
 from users.serializers import UserSerializer, UsersListSerializer
 
 
-class UsersAPI(APIView):
+class UsersAPI(GenericAPIView):
     """
     List (GET) and creates (POST) users
     """
@@ -20,8 +20,9 @@ class UsersAPI(APIView):
         :return: Response
         """
         users = User.objects.all().values("id", "username")
-        serializer = UsersListSerializer(users, many=True)   # many para decir que es una lista, no solo 1
-        return Response(serializer.data)
+        page = self.paginate_queryset(users)
+        serializer = UsersListSerializer(page, many=True)   # many para decir que es una lista, no solo 1
+        return self.get_paginated_response(serializer.data)
 
     def post(self, request):
         """
