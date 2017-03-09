@@ -10,10 +10,8 @@ class UsersListSerializer(serializers.Serializer):
     username = serializers.CharField()
 
 
-class UserSerializer(serializers.Serializer):
+class UserSerializer(UsersListSerializer):
 
-    id = serializers.ReadOnlyField()
-    username = serializers.CharField()
     first_name = serializers.CharField()
     last_name = serializers.CharField()
     email = serializers.EmailField()
