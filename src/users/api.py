@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from users.serializers import UserSerializer
+from users.serializers import UserSerializer, UsersListSerializer
 
 
 class UsersAPI(APIView):
@@ -19,8 +19,8 @@ class UsersAPI(APIView):
         :param request: HttpRequest
         :return: Response
         """
-        users = User.objects.all()
-        serializer = UserSerializer(users, many=True)   # many para decir que es una lista, no solo 1
+        users = User.objects.all().values("id", "username")
+        serializer = UsersListSerializer(users, many=True)   # many para decir que es una lista, no solo 1
         return Response(serializer.data)
 
     def post(self, request):
