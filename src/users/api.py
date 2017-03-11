@@ -6,18 +6,16 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework.viewsets import GenericViewSet
 
 from users.permissions import UserPermission
 from users.serializers import UserSerializer, UsersListSerializer
 
+class UserViewSet(GenericViewSet):
 
-class UsersAPI(GenericAPIView):
-    """
-    List (GET) and creates (POST) users
-    """
     permission_classes = (UserPermission,)
 
-    def get(self, request):
+    def list(self, request):
         """
         Returns a list of the system users
         :param request: HttpRequest
@@ -28,7 +26,7 @@ class UsersAPI(GenericAPIView):
         serializer = UsersListSerializer(page, many=True)   # many para decir que es una lista, no solo 1
         return self.get_paginated_response(serializer.data)
 
-    def post(self, request):
+    def create(self, request):
         """
         Creates a user
         :param request:
@@ -41,14 +39,7 @@ class UsersAPI(GenericAPIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-class UserDetailAPI(APIView):
-    """
-    User detail (GET) update user (PUT), delete user (DELETE)
-    """
-    permission_classes = (UserPermission,)
-
-    def get(self, request, pk):
+    def retrieve(self, request, pk):
         """
         Returns a requested user
         :param request:
@@ -60,7 +51,7 @@ class UserDetailAPI(APIView):
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
-    def put(self, request, pk):
+    def update(self, request, pk):
         """
         Updates an User with the given data
         :param request: HttpRequest
@@ -77,7 +68,7 @@ class UserDetailAPI(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-    def delete(self, request, pk):
+    def destroy(self, request, pk):
         """
         Delete an user
         :param request: HttpRequest
