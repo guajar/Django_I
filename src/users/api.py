@@ -2,10 +2,12 @@
 
 from django.contrib.auth.models import User
 from rest_framework.generics import get_object_or_404, GenericAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
+from users.permissions import UserPermission
 from users.serializers import UserSerializer, UsersListSerializer
 
 
@@ -13,6 +15,8 @@ class UsersAPI(GenericAPIView):
     """
     List (GET) and creates (POST) users
     """
+    permission_classes = (UserPermission,)
+
     def get(self, request):
         """
         Returns a list of the system users
@@ -35,13 +39,14 @@ class UsersAPI(GenericAPIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
-            return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserDetailAPI(APIView):
     """
     User detail (GET) update user (PUT), delete user (DELETE)
     """
+    permission_classes = (UserPermission,)
 
     def get(self, request, pk):
         """
@@ -51,6 +56,7 @@ class UserDetailAPI(APIView):
         :return: Response
         """
         user = get_object_or_404(User, pk=pk)
+        self.check_object_permissions(request, user)
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
@@ -62,6 +68,7 @@ class UserDetailAPI(APIView):
         :return: Response
         """
         user = get_object_or_404(User, pk=pk)
+        self.check_object_permissions(request, user)
         serializer = UserSerializer(user, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -78,5 +85,6 @@ class UserDetailAPI(APIView):
         :return: Response
         """
         user = get_object_or_404(User, pk=pk)
+        self.check_object_permissions(request, user)
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
