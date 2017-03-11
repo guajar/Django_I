@@ -17,13 +17,14 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework.routers import DefaultRouter
 
-from tasks.api import TasksAPI, TaskDetailAPI
+from tasks.api import TaskViewSet
 from tasks.views import tasks_list, tasks_detail, NewTaskView
 from users.api import UserViewSet
 from users.views import LoginView, logout
 
 router = DefaultRouter()
 router.register("users", UserViewSet, base_name="users_api")
+router.register("tasks", TaskViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -33,11 +34,6 @@ urlpatterns = [
     url(r'^login$', LoginView.as_view(), name="login"),
     url(r'^logout$', logout, name='logout'),
 
-    # API Users
+    # API Users & Tasks
     url(r'^api/1.0/', include(router.urls)),
-
-    # API Tasks
-    url(r'^api/1.0/tasks/$', TasksAPI.as_view(), name="tasks_api"),
-    url(r'^api/1.0/tasks/(?P<pk>[0-9]+)/?$', TaskDetailAPI.as_view(), name="task_detail_api")
-
 ]
