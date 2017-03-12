@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'ui',
     'tasks',
     'users',
-    'rest_framework'
+    'rest_framework',
+    'files'
 ]
 
 MIDDLEWARE = [
@@ -152,7 +153,19 @@ LOGIN_URL = '/login'
 # REST Framework Settings
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 3
+    'PAGE_SIZE': 3,
+    'DEFAULT_RENDERED_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework_xml.renderers.XMLRenderer',
+        'rest_framework_csv.renderers.CSVRenderer',
+        'rest_framework_yaml.renderes.YAMLRenderer',
+        'rest_framework_plist.PlistRenderer'
+    )
 }
+
+# MEDIA ROOT
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 

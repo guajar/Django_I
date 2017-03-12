@@ -17,6 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework.routers import DefaultRouter
 
+from files.models import FileViewSet
 from tasks.api import TaskViewSet
 from tasks.views import tasks_list, tasks_detail, NewTaskView
 from users.api import UserViewSet
@@ -25,6 +26,7 @@ from users.views import LoginView, logout
 router = DefaultRouter()
 router.register("users", UserViewSet, base_name="users_api")
 router.register("tasks", TaskViewSet)
+router.register("files", FileViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -36,4 +38,6 @@ urlpatterns = [
 
     # API Users & Tasks
     url(r'^api/1.0/', include(router.urls)),
+
+
 ]
